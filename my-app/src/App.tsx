@@ -1,6 +1,7 @@
 import {BookList} from "./bookShelf/BookList";
 import {AddBook} from "./bookShelf/AddBook";
 import {createSignal, Show} from "solid-js";
+import Button from "@suid/material/Button";
 
 export type Book = {
     title: string;
@@ -24,9 +25,11 @@ function Bookshelf(props: BookshelfProps) {
         <div>
             <h1>{props.name}'s Bookshelf</h1>
             <BookList books={books()}/>
-            <Show when={showForm()} fallback={<button onClick={() => setShowForm(!showForm())}>Add a new book</button>}>
+            <Show when={showForm()}
+                  fallback={<Button variant="contained" onClick={() => setShowForm(!showForm())}>Add a new
+                      book</Button>}>
                 <AddBook setBooks={setBooks}/>
-                <button onClick={() => setShowForm(!showForm())}>Close add book form</button>
+                <Button variant="contained" onClick={() => setShowForm(!showForm())}>Close add book form</Button>
             </Show>
         </div>
     );
