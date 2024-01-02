@@ -16,6 +16,8 @@ export function AddBook(props: AddBookProps) {
     const [input, setInput] = createSignal('');
     const [query, setQuery] = createSignal('');
 
+    const [isDisabled, setIsDisabled] = createSignal(false);
+
     const [data] = createResource(query, searchBook);
 
     return (
@@ -28,10 +30,11 @@ export function AddBook(props: AddBookProps) {
                         console.log(input());
                     }}/>
                 </div>
-                <Button variant="contained" type="submit" onClick={(e) => {
+                <Button disabled={isDisabled()} variant="contained" type="submit" onClick={(e) => {
                     e.preventDefault();
+                    setIsDisabled(true);
                     setQuery(input);
-                }}>Add book
+                }}>Find book
                 </Button>
             </form>
             <Show when={!data.loading} fallback={<>Searching...</>}>
@@ -43,6 +46,7 @@ export function AddBook(props: AddBookProps) {
                                     aria-label={`Add ${book.title} by ${book.author} to the bookshelf`}
                                     onClick={(e) => {
                                         e.preventDefault();
+                                        setIsDisabled(false);
                                         props.setBooks((books) => [...books, book]);
                                     }}
                             >Add
